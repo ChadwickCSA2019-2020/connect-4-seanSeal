@@ -1,7 +1,13 @@
 import java.util.Random;
 /**
  * Describe your basic strategy here.
- * @author <your Github username>
+ * @author <seanSeal>
+ *
+ *1) see if Agent can win
+ *	if true then move to win
+ *2) see if BadAgent can win on their next turn 
+ *	if true then block 
+ *3)
  *
  */
 public class MyAgent extends Agent {
@@ -87,7 +93,7 @@ public class MyAgent extends Agent {
 
   /**
    * Returns a random valid move. If your agent doesn't know what to do, making a random move
-   * can allow the game to go on anyway.
+   * can allow thqe game to go on anyway.
    *
    * @return a random valid move.
    */
@@ -109,6 +115,20 @@ public class MyAgent extends Agent {
    * @return the column that would allow the agent to win.
    */
   public int iCanWin() {
+	  /**
+	   * Make copie of board 
+	   * Place a your peice in colem 1-7 if you can
+	   * +++
+	   * for(c = 0; c <= getColumnCount(); c++){
+	   * 
+	   * }
+	   * +++
+	   * check each time if you won using the gamewon()
+	   * If any collem ture go there
+	   * 
+	   *
+	   *
+	   */
     return 0;
   }
 
