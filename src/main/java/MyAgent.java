@@ -56,14 +56,14 @@ public class MyAgent extends Agent {
    *
    * @param columnNumber The column into which to drop the token.
    */
-  public void moveOnColumn(int columnNumber) {
+  public void moveOnColumn(int columnNumber, Connect4Game game) {
     // Find the top empty slot in the column
     // If the column is full, lowestEmptySlot will be -1
-    int lowestEmptySlotIndex = getLowestEmptyIndex(myGame.getColumn(columnNumber));
+    int lowestEmptySlotIndex = getLowestEmptyIndex(game.getColumn(columnNumber));
     // if the column is not full
     if (lowestEmptySlotIndex > -1) {
       // get the slot in this column at this index
-      Connect4Slot lowestEmptySlot = myGame.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
+      Connect4Slot lowestEmptySlot = game.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
       // If the current agent is the Red player...
       if (iAmRed) {
         lowestEmptySlot.addRed(); // Place a red token into the empty slot
@@ -93,7 +93,7 @@ public class MyAgent extends Agent {
 
   /**
    * Returns a random valid move. If your agent doesn't know what to do, making a random move
-   * can allow thqe game to go on anyway.
+   * can allow the game to go on anyway.
    *
    * @return a random valid move.
    */
@@ -112,24 +112,37 @@ public class MyAgent extends Agent {
    * it can go ahead and make that move. Implement this method to return what column would
    * allow the agent to win.</p>
    *
-   * @return the column that would allow the agent to win.
+   * @return the column that would allow the agent to win
    */
   public int iCanWin() {
 	  /**
 	   * Make copie of board 
-	   * Place a your peice in colem 1-7 if you can
+	   * Place your peice(therticly) in column 1-ColumnCount if you can
 	   * +++
 	   * for(c = 0; c <= getColumnCount(); c++){
+	   * Connect4Game iGame = new Connect4Game(myGame);
+	   * myGame.moveOnColumn(c)
+	   * char won = iGame.gameWon()
+	   * if(won == 'R' && iAmRed == true){
 	   * 
+	   * }else if(won == Y && iAmRed==false)
 	   * }
 	   * +++
-	   * check each time if you won using the gamewon()
+	   * check each time if you won using the gameWon()
 	   * If any collem ture go there
 	   * 
 	   *
-	   *
-	   */
-    return 0;
+	   */	  
+	  for(int c = 0; c<= myGame.getColumnCount();c++) {
+			  Connect4Game iGame = new Connect4Game(myGame);
+			  moveOnColumn(c,iGame);
+			  if(iGame.gameWon() == 'R' && iAmRed == true) {
+				  return c;
+			  }else if(iGame.gameWon() == 'Y' && iAmRed == false) {
+				  return c;
+			  }else return -1;
+	  
+	  }
   }
 
   /**
