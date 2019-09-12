@@ -160,7 +160,14 @@ public class MyAgent extends Agent {
    * @return the column that would allow the opponent to win.
    */
   public int theyCanWin() {
-    return 0;
+	  for(int c = 0; c < myGame.getColumnCount();c++) {
+			 Connect4Game iGame = new Connect4Game(myGame);
+			 moveOnColumnTest(c,iGame, false);
+			 if(iGame.gameWon() != 'N') {
+				 return c;
+				}
+			 }
+	  return -1;
   }
 
   /**
