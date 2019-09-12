@@ -75,7 +75,7 @@ public class MyAgent extends Agent {
 
   
   
-  public void moveOnColumnTest(int columnNumber, Connect4Game game) {
+  public void moveOnColumnTest(int columnNumber, Connect4Game game, boolean placeRed) {
 	    // Find the top empty slot in the column
 	    // If the column is full, lowestEmptySlot will be -1
 	    int lowestEmptySlotIndex = getLowestEmptyIndex(game.getColumn(columnNumber));
@@ -84,7 +84,7 @@ public class MyAgent extends Agent {
 	      // get the slot in this column at this index
 	      Connect4Slot lowestEmptySlot = game.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
 	      // If the current agent is the Red player...
-	      if (iAmRed) {
+	      if (placeRed) {
 	        lowestEmptySlot.addRed(); // Place a red token into the empty slot
 	      } else {
 	        lowestEmptySlot.addYellow(); // Place a yellow token into the empty slot
@@ -141,7 +141,7 @@ public class MyAgent extends Agent {
 	   */	
 	  for(int c = 0; c < myGame.getColumnCount();c++) {
 			 Connect4Game iGame = new Connect4Game(myGame);
-			 moveOnColumnTest(c,iGame);
+			 moveOnColumnTest(c,iGame, true);
 			 if(iGame.gameWon() != 'N') {
 				 return c;
 				}
