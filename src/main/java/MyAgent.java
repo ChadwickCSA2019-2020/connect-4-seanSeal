@@ -132,17 +132,19 @@ public class MyAgent extends Agent {
 	   * If any collem ture go there
 	   * 
 	   *
-	   */	  
+	   */	
+	  int won = -1;
 	  for(int c = 0; c<= myGame.getColumnCount();c++) {
 			  Connect4Game iGame = new Connect4Game(myGame);
 			  moveOnColumn(c,iGame);
 			  if(iGame.gameWon() == 'R' && iAmRed == true) {
-				  return c;
+				  won = c;
 			  }else if(iGame.gameWon() == 'Y' && iAmRed == false) {
-				  return c;
-			  }else return -1;
+				  won = c;
+			  }else won = -1;
 	  
 	  }
+	  return won;
   }
 
   /**
