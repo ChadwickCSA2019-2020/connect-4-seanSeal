@@ -56,14 +56,14 @@ public class MyAgent extends Agent {
    *
    * @param columnNumber The column into which to drop the token.
    */
-  public void moveOnColumn(int columnNumber, Connect4Game game) {
+  public void moveOnColumn(int columnNumber) {
     // Find the top empty slot in the column
     // If the column is full, lowestEmptySlot will be -1
-    int lowestEmptySlotIndex = getLowestEmptyIndex(game.getColumn(columnNumber));
+    int lowestEmptySlotIndex = getLowestEmptyIndex(myGame.getColumn(columnNumber));
     // if the column is not full
     if (lowestEmptySlotIndex > -1) {
       // get the slot in this column at this index
-      Connect4Slot lowestEmptySlot = game.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
+      Connect4Slot lowestEmptySlot = myGame.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
       // If the current agent is the Red player...
       if (iAmRed) {
         lowestEmptySlot.addRed(); // Place a red token into the empty slot
@@ -73,6 +73,26 @@ public class MyAgent extends Agent {
     }
   }
 
+  
+  
+  public void moveOnColumnTest(int columnNumber, Connect4Game game) {
+	    // Find the top empty slot in the column
+	    // If the column is full, lowestEmptySlot will be -1
+	    int lowestEmptySlotIndex = getLowestEmptyIndex(game.getColumn(columnNumber));
+	    // if the column is not full
+	    if (lowestEmptySlotIndex > -1) {
+	      // get the slot in this column at this index
+	      Connect4Slot lowestEmptySlot = game.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
+	      // If the current agent is the Red player...
+	      if (iAmRed) {
+	        lowestEmptySlot.addRed(); // Place a red token into the empty slot
+	      } else {
+	        lowestEmptySlot.addYellow(); // Place a yellow token into the empty slot
+	      }
+	    }
+	  }
+  
+  
   /**
    * Returns the index of the top empty slot in a particular column.
    *
@@ -116,36 +136,19 @@ public class MyAgent extends Agent {
    */
   public int iCanWin() {
 	  /**
-	   * Make copie of board 
-	   * Place your peice(therticly) in column 1-ColumnCount if you can
-	   * +++
-	   * for(c = 0; c <= getColumnCount(); c++){
-	   * Connect4Game iGame = new Connect4Game(myGame);
-	   * myGame.moveOnColumn(c)
-	   * char won = iGame.gameWon()
-	   * if(won == 'R' && iAmRed == true){
-	   * 
-	   * }else if(won == Y && iAmRed==false)
-	   * }
-	   * +++
-	   * check each time if you won using the gameWon()
-	   * If any collem ture go there
-	   * 
-	   *
+	   * Make copied of board 
+	   * Place your piece(theoretically) in column 1-ColumnCount if you can
 	   */	
-	  int won = -1;
-	  for(int c = 0; c<= myGame.getColumnCount();c++) {
-			  Connect4Game iGame = new Connect4Game(myGame);
-			  moveOnColumn(c,iGame);
-			  if(iGame.gameWon() == 'R' && iAmRed == true) {
-				  won = c;
-			  }else if(iGame.gameWon() == 'Y' && iAmRed == false) {
-				  won = c;
-			  }else won = -1;
-	  
-	  }
-	  return won;
-  }
+	  for(int c = 0; c < myGame.getColumnCount();c++) {
+			 Connect4Game iGame = new Connect4Game(myGame);
+			 moveOnColumnTest(c,iGame);
+			 if(iGame.gameWon() != 'N') {
+				 return c;
+				}
+			 }
+	  return -1;
+	 }
+
 
   /**
    * Returns the column that would allow the opponent to win.
