@@ -56,12 +56,6 @@ public class MyAgentTest {
 	 redAgent.moveOnColumn(i);
 	 yellowAgent.moveOnColumn(i);    
  	}
-    /*redAgent.moveOnColumn(0);
-    yellowAgent.moveOnColumn(0);   
-    redAgent.moveOnColumn(1);
-    yellowAgent.moveOnColumn(1); 
-    redAgent.moveOnColumn(2);
-    yellowAgent.moveOnColumn(2); */
     
     assertEquals(3 , redAgent.iCanWin());
 
@@ -72,7 +66,7 @@ public class MyAgentTest {
  
 // TODO: Write 2 test cases for testICanWinDiagonally
 @Test
-public void testICanWinDiagonally1() {	
+public void testICanWinDiagonally() {	
 	MyAgent redAgent = new MyAgent(game, true);
     MyAgent yellowAgent = new MyAgent(game, false);
     game.clearBoard();
@@ -99,13 +93,45 @@ public void testICanWinDiagonally1() {
       yellowAgent.moveOnColumn(2);
     }
 
-    assertEquals(redAgent.theyCanWin(), 2);
+    assertEquals(2, redAgent.theyCanWin());
   }
 
   // TODO: Write testTheyCanWinHorizontally
 
-  // TODO: Write testTheyCanWinDiagonally
+  @Test
+  public void testTheyCanWinHorizontally() {	
+ 	MyAgent redAgent = new MyAgent(game, true);
+     MyAgent yellowAgent = new MyAgent(game, false);
+     game.clearBoard();
+  for(int i = 0; i < 3; i++) {
+ 	 yellowAgent.moveOnColumn(i);
+ 	 redAgent.moveOnColumn(i);    
+  	}
+     
+     assertEquals(3 , redAgent.theyCanWin());
 
+   }
+  
+  
+  // TODO: Write testTheyCanWinDiagonally
+  @Test
+  public void testTheyCanWinDiagonally() {	
+  	MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+      yellowAgent.moveOnColumn(1);
+      redAgent.moveOnColumn(2);
+      yellowAgent.moveOnColumn(2);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(3);
+      redAgent.moveOnColumn(4);
+      yellowAgent.moveOnColumn(3);
+      redAgent.moveOnColumn(4);
+      yellowAgent.moveOnColumn(4);
+      
+      assertEquals(4 , redAgent.theyCanWin());
+  }
+      
   // Tests you can win against a Beginner agent as Red
   @Test
   public void testRedWinningBeginnerAgent() {
@@ -114,13 +140,14 @@ public void testICanWinDiagonally1() {
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
       game.clearBoard(); 
+      System.out.println("Running the game");
       while(!game.boardFull() || game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
         }
       }
-
+      System.out.println("At game " + i);
       if (game.gameWon() == 'R') {
         numberOfWins++;
       }
