@@ -181,7 +181,26 @@ public class MyAgent extends Agent {
 		}
 		return -1;
 	}
-
+/**
+ * Can see the "consequence" of you move.
+ * Does what theyCanWin but for the next turn.
+ * VERY IMPORTANT 
+ * ==============
+ * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
+ */
+	
+	public int theyCanWinAfterMyNextTurn() {
+		for(int c = 0; c < myGame.getColumnCount();c++) {
+			Connect4Game iGame = new Connect4Game(myGame);
+			moveOnColumnTest(c,iGame, false);
+			moveOnColumnTest(c,iGame, true);
+			if(iGame.gameWon() != 'N') {
+				return c;
+			}
+		}
+		return -1;
+	}
+	
 	/**
 	 * Returns the name of this agent.
 	 *
