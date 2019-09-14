@@ -132,6 +132,13 @@ public void testICanWinDiagonally() {
       assertEquals(4 , redAgent.theyCanWin());
   }
       
+ 
+  
+  
+  
+  
+  
+  
   // Tests you can win against a Beginner agent as Red
   @Test
   public void testRedWinningBeginnerAgent() {

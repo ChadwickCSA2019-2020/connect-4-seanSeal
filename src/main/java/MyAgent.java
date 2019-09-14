@@ -163,6 +163,28 @@ public class MyAgent extends Agent {
 
 
 	/**
+	 * Can see the "consequence" of you move.
+	 * Does what iCanWin but for the next turn.
+	 * VERY IMPORTANT 
+	 * ==============
+	 * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
+	 */
+		
+		public int ICanWinAfterMyNextTurn() {
+			for(int c = 0; c < myGame.getColumnCount();c++) {
+				Connect4Game iGame = new Connect4Game(myGame);
+				moveOnColumnTest(c,iGame, true);
+				moveOnColumnTest(c,iGame, false);
+				if(iGame.gameWon() != 'N') {
+					return c;
+				}
+			}
+			return -1;
+		}
+	
+	
+	
+	/**
 	 * Returns the column that would allow the opponent to win.
 	 *
 	 * <p>You might want your agent to check to see if the opponent would have any winning moves
