@@ -83,6 +83,27 @@ public void testICanWinDiagonally() {
 
     assertEquals(4 , redAgent.iCanWin());
 }
+
+
+//Tests if ICanWinAfterMyNextTurn works
+@Test
+public void testICanWinAfterMyNextTurn() {
+	  MyAgent redAgent = new MyAgent(game, true);
+    MyAgent yellowAgent = new MyAgent(game, false);
+    game.clearBoard();
+    redAgent.moveOnColumn(1);
+    yellowAgent.moveOnColumn(2);
+    redAgent.moveOnColumn(2);
+    yellowAgent.moveOnColumn(4);
+    redAgent.moveOnColumn(4);
+    yellowAgent.moveOnColumn(4);
+    redAgent.moveOnColumn(4);
+    yellowAgent.moveOnColumn(3);
+    
+    assertEquals(3 , redAgent.iCanWinAfterMyNextTurn());
+}
+
+
   @Test
   public void testTheyCanWin() {
     MyAgent redAgent = new MyAgent(game, true);
@@ -132,13 +153,6 @@ public void testICanWinDiagonally() {
       assertEquals(4 , redAgent.theyCanWin());
   }
       
- 
-  
-  
-  
-  
-  
-  
   // Tests you can win against a Beginner agent as Red
   @Test
   public void testRedWinningBeginnerAgent() {
