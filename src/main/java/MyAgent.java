@@ -47,14 +47,14 @@ public class MyAgent extends Agent {
 	 *
 	 */
 	public void move() {
-		System.out.println("iCanWin returns" + iCanWin());
+		/*System.out.println("iCanWin returns" + iCanWin());
 		if(iCanWin() > -1) {
 			moveOnColumn(iCanWin());
 		}else if(theyCanWin() > -1) {
 			moveOnColumn(theyCanWin());
 		}else {
 			moveOnColumn(randomMove());
-		}
+		}*/
 
 	}
 
@@ -170,7 +170,7 @@ public class MyAgent extends Agent {
 	 * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
 	 */
 		
-		public int ICanWinAfterMyNextTurn() {
+		public int iCanWinAfterMyNextTurn() {
 			for(int c = 0; c < myGame.getColumnCount();c++) {
 				Connect4Game iGame = new Connect4Game(myGame);
 				moveOnColumnTest(c,iGame, true);

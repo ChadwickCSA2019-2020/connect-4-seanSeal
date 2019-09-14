@@ -152,7 +152,28 @@ public void testICanWinAfterMyNextTurn() {
       
       assertEquals(4 , redAgent.theyCanWin());
   }
+  
+  @Test
+  public void testTheyCanWinAfterMyNextTurn() {
+	  MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+      yellowAgent.moveOnColumn(0);
+      redAgent.moveOnColumn(1);
+      yellowAgent.moveOnColumn(1);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(3);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(3);
+      redAgent.moveOnColumn(2);
+      yellowAgent.moveOnColumn(4);
       
+      assertEquals(2 , redAgent.theyCanWinAfterMyNextTurn());
+  }
+  
+  
+  
+  
   // Tests you can win against a Beginner agent as Red
   @Test
   public void testRedWinningBeginnerAgent() {
