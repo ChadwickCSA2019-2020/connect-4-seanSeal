@@ -15,6 +15,7 @@ public class MyAgent extends Agent {
 	 * A random number generator to randomly decide where to place a token.
 	 */
 	private Random random;
+	
 
 	/**
 	 * Constructs a new agent, giving it the game and telling it whether it is Red or Yellow.
@@ -47,13 +48,15 @@ public class MyAgent extends Agent {
 	 *
 	 */
 	public void move() {
-		/*System.out.println("iCanWin returns" + iCanWin());
-		if(iCanWin() > -1) {
+		/*if(iCanWin() > -1) {
 			moveOnColumn(iCanWin());
 		}else if(theyCanWin() > -1) {
 			moveOnColumn(theyCanWin());
-		}else {
-			moveOnColumn(randomMove());
+		}else if(theyCanWinAfterMyNextTurn() > -1) {
+			int ran = randomMove();
+			if(theyCanWinAfterMyNextTurn() == ran) {
+			
+			}
 		}*/
 
 	}
@@ -136,7 +139,54 @@ public class MyAgent extends Agent {
 		}
 		return i;
 	}
-
+	
+	public int validColumnCount() {
+		int invalidColumnCount = 0;
+		int validColumnCount = 0;
+		for(int c = 0; c < myGame.getColumnCount(); c++) {
+			if(getLowestEmptyIndex(myGame.getColumn(c)) == -1) {
+				invalidColumnCount++;
+			}
+		}
+		validColumnCount = myGame.getColumnCount() - invalidColumnCount;
+		return validColumnCount;
+	}
+	
+	/**
+	 * used for elimating columns to move on
+	 * 
+	 * true means ok to go 
+	 */
+	
+	public void checkRandomMove() {
+		boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
+		boolean[] blockCheck = iCanWinAfterMyNextTurn();
+		boolean[] reject = new boolean[myGame.getColumnCount()]; // false means not rejected and true means rejected
+		int ran = randomMove();
+		int w = 1;
+		int rejectCount = 0;
+		while( w == 1) { // this could be a infedent while loop
+			ran = randomMove();
+			if(reject[ran] == false) {
+				if(dumbCheck[ran]= true && blockCheck[ran] == true) {
+					moveOnColumn(ran);
+					w = 0;
+				}else {
+					reject[ran] = true;
+					rejectCount++;
+				}
+			}
+			if(validColumnCount() == rejectCount){
+				if(dumbCheck[ran] == true) {
+					moveOnColumn(ran);
+				}
+			}
+			
+		}
+	}
+	
+	
+	
 	/**
 	 * Returns the column that would allow the agent to win.
 	 *
@@ -170,16 +220,21 @@ public class MyAgent extends Agent {
 	 * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
 	 */
 		
-		public int iCanWinAfterMyNextTurn() {
+		public boolean[] iCanWinAfterMyNextTurn() { // checks if they win if you go here
+			boolean[] goHereOk = new boolean[myGame.getColumnCount()];
 			for(int c = 0; c < myGame.getColumnCount();c++) {
 				Connect4Game iGame = new Connect4Game(myGame);
-				moveOnColumnTest(c,iGame, true);
-				moveOnColumnTest(c,iGame, false);
-				if(iGame.gameWon() != 'N') {
-					return c;
+				moveOnColumnTest(c,iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
+				moveOnColumnTest(c,iGame, false);					// FALSE = YOUR COLOR
+				
+				if(iGame.gameWon() != 'N') 
+					{
+					if		(iGame.gameWon() == 'R' && iAmRed == true) 			{goHereOk[c] = false;}
+					else if	(iGame.gameWon() == 'Y' && iAmRed == false) 		{goHereOk[c] = false;}
+					else 														{goHereOk[c] = true;}
+					}
 				}
-			}
-			return -1;
+			return goHereOk;
 		}
 	
 	
@@ -211,16 +266,21 @@ public class MyAgent extends Agent {
  * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
  */
 	
-	public int theyCanWinAfterMyNextTurn() {
+	public boolean[] theyCanWinAfterMyNextTurn() { 								// THEY WIN IF YOU GO HERE
+		boolean[] goHereOk = new boolean[myGame.getColumnCount()];
 		for(int c = 0; c < myGame.getColumnCount();c++) {
 			Connect4Game iGame = new Connect4Game(myGame);
-			moveOnColumnTest(c,iGame, false);
-			moveOnColumnTest(c,iGame, true);
+			moveOnColumnTest(c,iGame, false);					// FALSE = YOUR COLOR
+			moveOnColumnTest(c,iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
 			if(iGame.gameWon() != 'N') {
-				return c;
+				if(iGame.gameWon() == 'R' && iAmRed == false) {			//do i need this one?
+					goHereOk[c] = false;
+				}else if(iGame.gameWon() == 'Y' && iAmRed == true) {
+					goHereOk[c] = false;
+				}else {goHereOk[c] = true;}	
 			}
 		}
-		return -1;
+		return goHereOk;
 	}
 	
 	/**
