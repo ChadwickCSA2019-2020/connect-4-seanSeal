@@ -48,16 +48,13 @@ public class MyAgent extends Agent {
 	 *
 	 */
 	public void move() {
-		/*if(iCanWin() > -1) {
+		if(iCanWin() > -1) {
 			moveOnColumn(iCanWin());
 		}else if(theyCanWin() > -1) {
 			moveOnColumn(theyCanWin());
-		}else if(theyCanWinAfterMyNextTurn() > -1) {
-			int ran = randomMove();
-			if(theyCanWinAfterMyNextTurn() == ran) {
-			
-			}
-		}*/
+		}else {
+			checkRandomMove();
+		}
 
 	}
 
@@ -159,27 +156,36 @@ public class MyAgent extends Agent {
 	 */
 	
 	public void checkRandomMove() {
+
 		boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
 		boolean[] blockCheck = iCanWinAfterMyNextTurn();
 		boolean[] reject = new boolean[myGame.getColumnCount()]; // false means not rejected and true means rejected
 		int ran = randomMove();
 		int w = 1;
 		int rejectCount = 0;
-		while( w == 1) { // this could be a infedent while loop
+		
+		
+		while( w == 1) { 										// this IS be a infedent while loop right now
+
 			ran = randomMove();
+			if(validColumnCount() == rejectCount){
+				if(dumbCheck[ran] == false) {
+					System.out.println("DOES THIS PART WORK???????");
+					moveOnColumn(ran);
+					w = 0;
+				}
+			}
 			if(reject[ran] == false) {
-				if(dumbCheck[ran]= true && blockCheck[ran] == true) {
+				//System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
+				if(dumbCheck[ran] == false && blockCheck[ran] == false) {
 					moveOnColumn(ran);
 					w = 0;
 				}else {
+					System.out.println("DID THIS RUN");
 					reject[ran] = true;
 					rejectCount++;
 				}
-			}
-			if(validColumnCount() == rejectCount){
-				if(dumbCheck[ran] == true) {
-					moveOnColumn(ran);
-				}
+
 			}
 			
 		}
@@ -272,8 +278,9 @@ public class MyAgent extends Agent {
 			Connect4Game iGame = new Connect4Game(myGame);
 			moveOnColumnTest(c,iGame, false);					// FALSE = YOUR COLOR
 			moveOnColumnTest(c,iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
+		
 			if(iGame.gameWon() != 'N') {
-				if(iGame.gameWon() == 'R' && iAmRed == false) {			//do i need this one?
+				if(iGame.gameWon() == 'R' && iAmRed == false) {	
 					goHereOk[c] = false;
 				}else if(iGame.gameWon() == 'Y' && iAmRed == true) {
 					goHereOk[c] = false;
