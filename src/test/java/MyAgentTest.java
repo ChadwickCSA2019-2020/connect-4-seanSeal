@@ -100,7 +100,7 @@ public void testICanWinAfterMyNextTurn() {
     redAgent.moveOnColumn(4);
     yellowAgent.moveOnColumn(3);
     
-    assertEquals(3 , redAgent.iCanWinAfterMyNextTurn());
+    assertEquals(true , redAgent.iCanWinAfterMyNextTurn());
 }
 
 
@@ -183,7 +183,7 @@ public void testICanWinAfterMyNextTurn() {
     for (int i = 0; i < 50; i++) {
       game.clearBoard(); 
       System.out.println("Running the game");
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
@@ -207,7 +207,7 @@ public void testICanWinAfterMyNextTurn() {
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
       game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
@@ -231,7 +231,7 @@ public void testICanWinAfterMyNextTurn() {
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
       game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
@@ -255,7 +255,7 @@ public void testICanWinAfterMyNextTurn() {
     int numberOfWins = 0;
     for (int i = 0; i < 50; i++) {
       game.clearBoard(); 
-      while(!game.boardFull() || game.gameWon() == 'N') {
+      while(!game.boardFull() && game.gameWon() == 'N') {
         redAgent.move();
         if (game.gameWon() != 'R') {
           yellowAgent.move();
