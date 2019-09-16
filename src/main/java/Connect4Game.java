@@ -148,7 +148,7 @@ public class Connect4Game {
             for (int j = 0; j < getRowCount(); j++) {
                 if (board[j][i] != 'B') {
                     if (j + 3 < getRowCount()) {
-                    	// I think this is for Horizontal win check
+                        // I think this is for Horizontal win check
                         if (board[j][i] == board[j + 1][i]
                                 && board[j][i] == board[j + 2][i]
                                 && board[j][i] == board[j + 3][i]) {
@@ -160,7 +160,7 @@ public class Connect4Game {
                         }
                     }
                     if (i + 3 < getColumnCount()) {
-                    	// I think this is for vertical win check
+                        // I think this is for vertical win check
                         if (board[j][i] == board[j][i + 1]
                                 && board[j][i] == board[j][i + 2]
                                 && board[j][i] == board[j][i + 3]) {
