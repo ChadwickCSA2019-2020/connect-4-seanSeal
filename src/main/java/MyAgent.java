@@ -3,11 +3,14 @@ import java.util.Random;
  * Describe your basic strategy here.
  * @author <seanSeal>
  *
- *1) see if Agent can win
- *if true then move to win
- *2) see if BadAgent can win on their next turn
- *if true then block
- *3)
+ *1) Test if I can win
+ *  if I can, move there
+ *2) Test if they can win
+ *  if they can, move there
+ *3) If neither can win next turn, enter checkRandomMove
+ *  test that moving here will not allow enemy to win in next turn
+ *  test that moving here will not allow me to win in next turn
+ *  if both are false move here (or any other applicable column)
  *
  */
 public class MyAgent extends Agent {
@@ -56,7 +59,6 @@ public class MyAgent extends Agent {
        checkRandomMove();
       // moveOnColumn(randomMove());
     }
-
   }
 
   /**
@@ -143,7 +145,7 @@ public class MyAgent extends Agent {
     return i;
   }
 
-  public int validColumnCount() {
+  public int validColumnCount() { // this can be a boolean array further down the road so that we can reuse the data
     int invalidColumnCount = 0;
     int validColumnCount = 0;
     for(int c = 0; c < myGame.getColumnCount(); c++) {
@@ -156,9 +158,9 @@ public class MyAgent extends Agent {
   }
 
   /**
-   * used for elimating columns to move on
+   * used for eliminating columns to move on.
    * 
-   * true means ok to go 
+   * true means OK to go 
    */
 
   public void checkRandomMove() {
@@ -171,21 +173,23 @@ public class MyAgent extends Agent {
     int rejectCount = 0;
 
 
-    while( w == 1) { 										// this IS be a infedent while loop right now
+    while( w == 1) { 				
 
       ran = randomMove();
-      if(validColumnCount() == rejectCount){
+      if(validColumnCount() == rejectCount){ //this if statement is a secondary gate
         if(dumbCheck[ran] == false) {
           System.out.println("DOES THIS PART WORK???????");
           moveOnColumn(ran);
           w = 0;
         }
+
       }
       if(reject[ran] == false) {
-        //System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
+        System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
         if(dumbCheck[ran] == false && blockCheck[ran] == false) {
           moveOnColumn(ran);
           w = 0;
+          // ask if we need a break
         }else {
           System.out.println("DID THIS RUN");
           reject[ran] = true;
@@ -230,23 +234,31 @@ public class MyAgent extends Agent {
    * VERY IMPORTANT 
    * ==============
    * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
+   * This code is blockCheck
+   * goHereNotOk when true means don't go there
    */
 
   public boolean[] iCanWinAfterMyNextTurn() { // checks if they win if you go here
-    boolean[] goHereOk = new boolean[myGame.getColumnCount()];
+    boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
     for(int c = 0; c < myGame.getColumnCount();c++) {
       Connect4Game iGame = new Connect4Game(myGame);
-      moveOnColumnTest(c,iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
-      moveOnColumnTest(c,iGame, false);					// FALSE = YOUR COLOR
+      moveOnColumnTest(c,iGame, true); 				// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
+      moveOnColumnTest(c,iGame, false);					 // FALSE = YOUR COLOR
 
-      if(iGame.gameWon() != 'N') 
+      if (iGame.gameWon() != 'N')
       {
-        if		(iGame.gameWon() == 'R' && iAmRed == true) 			{goHereOk[c] = false;}
-        else if	(iGame.gameWon() == 'Y' && iAmRed == false) 		{goHereOk[c] = false;}
-        else 														{goHereOk[c] = true;}
+        if (iGame.gameWon() == 'R' && iAmRed) {
+          goHereNotOk[c] = true; // don't go here
+        }
+        else if	(iGame.gameWon() == 'Y' && !iAmRed) {
+          goHereNotOk[c] = true; // don't go here
+        }
+        else {
+          goHereNotOk[c] = false; // you can go here
+        }
       }
     }
-    return goHereOk;
+    return goHereNotOk;
   }
 
 
@@ -261,10 +273,10 @@ public class MyAgent extends Agent {
    * @return the column that would allow the opponent to win.
    */
   public int theyCanWin() {
-    for(int c = 0; c < myGame.getColumnCount();c++) {
+    for (int c = 0; c < myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
-      moveOnColumnTest(c,iGame, true);
-      if(iGame.gameWon() != 'N') {
+      moveOnColumnTest(c, iGame, true);
+      if (iGame.gameWon() != 'N') {
         return c;
       }
     }
@@ -273,27 +285,31 @@ public class MyAgent extends Agent {
   /**
    * Can see the "consequence" of you move.
    * Does what theyCanWin but for the next turn.
-   * VERY IMPORTANT 
+   * VERY IMPORTANT
    * ==============
    * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
+   * this is dumbCheck
+   * @return boolean array (this needs to be fished)
    */
 
   public boolean[] theyCanWinAfterMyNextTurn() { 								// THEY WIN IF YOU GO HERE
-    boolean[] goHereOk = new boolean[myGame.getColumnCount()];
-    for(int c = 0; c < myGame.getColumnCount();c++) {
+    boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
+    for (int c = 0; c < myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
-      moveOnColumnTest(c,iGame, false);					// FALSE = YOUR COLOR
-      moveOnColumnTest(c,iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
+      moveOnColumnTest(c, iGame, false);					// FALSE = YOUR COLOR
+      moveOnColumnTest(c, iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
 
-      if(iGame.gameWon() != 'N') {
-        if(iGame.gameWon() == 'R' && iAmRed == false) {	
-          goHereOk[c] = false;
-        }else if(iGame.gameWon() == 'Y' && iAmRed == true) {
-          goHereOk[c] = false;
-        }else {goHereOk[c] = true;}	
+      if (iGame.gameWon() != 'N') {
+        if (iGame.gameWon() == 'R' && iAmRed) {
+          goHereNotOk[c] = true; // don't go here
+        } else if (iGame.gameWon() == 'Y' && !iAmRed) {
+          goHereNotOk[c] = true; // don't go here
+        } else {
+          goHereNotOk[c] = false; // it is OK to go here
+         }
       }
     }
-    return goHereOk;
+    return goHereNotOk;
   }
 
   /**
