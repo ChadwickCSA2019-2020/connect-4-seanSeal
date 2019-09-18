@@ -3,11 +3,14 @@ import java.util.Random;
  * Describe your basic strategy here.
  * @author <seanSeal>
  *
- *1) see if Agent can win
- *if true then move to win
- *2) see if BadAgent can win on their next turn
- *if true then block
- *3)
+ *1) Test if I can win
+ *  if I can, move there
+ *2) Test if they can win
+ *  if they can, move there
+ *3) If neither can win next turn, enter checkRandomMove
+ *  test that moving here will not allow enemy to win in next turn
+ *  test that moving here will not allow me to win in next turn
+ *  if both are false move here (or any other applicable column)
  *
  */
 public class MyAgent extends Agent {
@@ -48,11 +51,11 @@ public class MyAgent extends Agent {
    *
    */
   public void move() {
-    if(iCanWin() > -1) {
+    if (iCanWin() > -1) {
       moveOnColumn(iCanWin());
-    }else if(theyCanWin() > -1) {
+    } else if (theyCanWin() > -1) { 
       moveOnColumn(theyCanWin());
-    }else {
+    } else {
       checkRandomMove();
     }
 
@@ -150,7 +153,7 @@ public class MyAgent extends Agent {
   }
 
   /**
-   * used for elimating columns to move on
+   * used for elimating columns to move on.
    * 
    * true means ok to go 
    */
@@ -165,7 +168,7 @@ public class MyAgent extends Agent {
     int rejectCount = 0;
 
 
-    while( w == 1) { 										// this IS be a infedent while loop right now
+    while( w == 1) { 										// this is our indefinite loop
 
       ran = randomMove();
       if(validColumnCount() == rejectCount){
