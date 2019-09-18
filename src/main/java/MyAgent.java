@@ -48,12 +48,13 @@ public class MyAgent extends Agent {
    *
    */
   public void move() {
-    if(iCanWin() > -1) {
+    if (iCanWin() > -1) {
       moveOnColumn(iCanWin());
-    }else if(theyCanWin() > -1) {
+    } else if (theyCanWin() > -1) {
       moveOnColumn(theyCanWin());
-    }else {
-      checkRandomMove();
+    } else {
+       checkRandomMove();
+      // moveOnColumn(randomMove());
     }
 
   }
@@ -80,9 +81,14 @@ public class MyAgent extends Agent {
       }
     }
   }
-
-
-
+  /**
+   * does same thing as move on column but take more parameters
+   * takes what game it should move on and if it should do the opposite color of who you are.
+   *
+   * @param columnNumber The column into which to drop the token.
+   * @param game What game the method should take place in.
+   * @param oppositColor If you want to use and opposit color.
+   */
   public void moveOnColumnTest(int columnNumber, Connect4Game game, boolean oppositColor) {
     // Find the top empty slot in the column
     // If the column is full, lowestEmptySlot will be -1
