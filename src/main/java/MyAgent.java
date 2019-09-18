@@ -239,8 +239,9 @@ public class MyAgent extends Agent {
    * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
    * This code is blockCheck
    * goHereNotOk when true means don't go there
+   * @return boolean array of witch columns a agent should go on.
    */
-
+// something is wrong here
   public boolean[] iCanWinAfterMyNextTurn() { // checks if they win if you go here
     boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
     for (int c = 0; c < myGame.getColumnCount(); c++) {
@@ -295,13 +296,13 @@ public class MyAgent extends Agent {
 >>>>>>> 5bd6c41d70085e76e4b8ee04e73d5cac66ac8b13
    */
 
-  public boolean[] theyCanWinAfterMyNextTurn() { 								// THEY WIN IF YOU GO HERE
+  public boolean[] theyCanWinAfterMyNextTurn() { // THEY WIN IF YOU GO HERE
     boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
     for (int c = 0; c < myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
 
-      moveOnColumnTest(c, iGame, false);					// FALSE = YOUR COLOR
-      moveOnColumnTest(c, iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
+      moveOnColumnTest(c, iGame, false); // FALSE = YOUR COLOR
+      moveOnColumnTest(c, iGame, true); // TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
 
       if (iGame.gameWon() != 'N') {
         if (iGame.gameWon() == 'R' && iAmRed) {
