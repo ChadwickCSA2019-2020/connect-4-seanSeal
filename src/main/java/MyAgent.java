@@ -258,8 +258,8 @@ public class MyAgent extends Agent {
           goHereNotOk[c] = false; // you can go here
       }
     }
+   }
     return goHereNotOk;
-    }
   }
 
 
