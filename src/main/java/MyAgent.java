@@ -1,7 +1,7 @@
 import java.util.Random;
 /**
  * Describe your basic strategy here.
- * @author <seanSeal>
+ * @author seenSeal
  *
  *1) Test if I can win
  *  if I can, move there
@@ -100,13 +100,13 @@ public class MyAgent extends Agent {
       // get the slot in this column at this index
       Connect4Slot lowestEmptySlot = game.getColumn(columnNumber).getSlot(lowestEmptySlotIndex);
       // If the current agent is the Red player...
-      if (oppositColor == false && iAmRed == true) {
+      if (!oppositColor && iAmRed) {
         lowestEmptySlot.addRed(); // Place a red token into the empty slot
-      } else if(oppositColor == false && iAmRed == false) {
+      } else if (!oppositColor && !iAmRed) {
         lowestEmptySlot.addYellow(); // Place a yellow token into the empty slot
-      } else if(oppositColor == true && iAmRed == true) {
-        lowestEmptySlot.addYellow(); // Place a yellow token into the empty slot 
-      } else if(oppositColor == true && iAmRed == false) {
+      } else if (oppositColor && iAmRed) {
+        lowestEmptySlot.addYellow(); // Place a yellow token into the empty slot
+      } else if (oppositColor && !iAmRed) {
         lowestEmptySlot.addRed(); // Place a red token into the empty slot
       }
     }
@@ -145,11 +145,15 @@ public class MyAgent extends Agent {
     return i;
   }
 
+  /**
+   * counts the amount of valid columns.
+   *@return  gives int of valid columns.
+   */
   public int validColumnCount() { // this can be a boolean array further down the road so that we can reuse the data
     int invalidColumnCount = 0;
     int validColumnCount = 0;
-    for(int c = 0; c < myGame.getColumnCount(); c++) {
-      if(getLowestEmptyIndex(myGame.getColumn(c)) == -1) {
+    for (int c = 0; c < myGame.getColumnCount(); c++) {
+      if (getLowestEmptyIndex(myGame.getColumn(c)) == -1) {
         invalidColumnCount++;
       }
     }
@@ -159,8 +163,7 @@ public class MyAgent extends Agent {
 
   /**
    * used for eliminating columns to move on.
-   * 
-   * true means OK to go 
+   * true means OK to go
    */
 
   public void checkRandomMove() {
@@ -173,24 +176,24 @@ public class MyAgent extends Agent {
     int rejectCount = 0;
 
 
-    while( w == 1) { 				
+    while (w == 1) {
 
       ran = randomMove();
-      if(validColumnCount() == rejectCount){ //this if statement is a secondary gate
-        if(dumbCheck[ran] == false) {
+      if (validColumnCount() == rejectCount) { // this if statement is a secondary gate
+        if (!dumbCheck[ran]) {
           System.out.println("DOES THIS PART WORK???????");
           moveOnColumn(ran);
           w = 0;
         }
 
       }
-      if(reject[ran] == false) {
+      if (!reject[ran]) {
         System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
-        if(dumbCheck[ran] == false && blockCheck[ran] == false) {
+        if (!dumbCheck[ran] && !blockCheck[ran]) {
           moveOnColumn(ran);
           w = 0;
           // ask if we need a break
-        }else {
+        } else {
           System.out.println("DID THIS RUN");
           reject[ran] = true;
           rejectCount++;
@@ -214,13 +217,13 @@ public class MyAgent extends Agent {
    */
   public int iCanWin() {
     /**
-     * Make copied of board 
-     * Place your piece(theoretically) in column 1-ColumnCount if you can
-     */	
-    for(int c = 0; c < myGame.getColumnCount();c++) {
+     * Make copied of board.
+     * Place your piece(theoretically) in column 1-ColumnCount if you can.
+     */
+    for (int c = 0; c < myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
-      moveOnColumnTest(c,iGame, false);
-      if(iGame.gameWon() != 'N') {
+      moveOnColumnTest(c, iGame, false);
+      if (iGame.gameWon() != 'N') {
         return c;
       }
     }
@@ -231,7 +234,7 @@ public class MyAgent extends Agent {
   /**
    * Can see the "consequence" of you move.
    * Does what iCanWin but for the next turn.
-   * VERY IMPORTANT 
+   * VERY IMPORTANT.
    * ==============
    * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
    * This code is blockCheck
@@ -240,20 +243,17 @@ public class MyAgent extends Agent {
 
   public boolean[] iCanWinAfterMyNextTurn() { // checks if they win if you go here
     boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
-    for(int c = 0; c < myGame.getColumnCount();c++) {
+    for (int c = 0; c < myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
-      moveOnColumnTest(c,iGame, true); 				// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
-      moveOnColumnTest(c,iGame, false);					 // FALSE = YOUR COLOR
+      moveOnColumnTest(c, iGame, true); // TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
+      moveOnColumnTest(c, iGame, false); // FALSE = YOUR COLOR
 
-      if (iGame.gameWon() != 'N')
-      {
+      if (iGame.gameWon() != 'N') {
         if (iGame.gameWon() == 'R' && iAmRed) {
           goHereNotOk[c] = true; // don't go here
-        }
-        else if	(iGame.gameWon() == 'Y' && !iAmRed) {
+        } else if (iGame.gameWon() == 'Y' && !iAmRed) {
           goHereNotOk[c] = true; // don't go here
-        }
-        else {
+        } else {
           goHereNotOk[c] = false; // you can go here
       }
     }
