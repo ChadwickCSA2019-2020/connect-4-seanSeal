@@ -255,10 +255,10 @@ public class MyAgent extends Agent {
         }
         else {
           goHereNotOk[c] = false; // you can go here
-        }
       }
     }
     return goHereNotOk;
+    }
   }
 
 
@@ -289,13 +289,17 @@ public class MyAgent extends Agent {
    * ==============
    * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
    * this is dumbCheck
+<<<<<<< HEAD
    * @return boolean array (this needs to be fished)
+=======
+>>>>>>> 5bd6c41d70085e76e4b8ee04e73d5cac66ac8b13
    */
 
   public boolean[] theyCanWinAfterMyNextTurn() { 								// THEY WIN IF YOU GO HERE
     boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
     for (int c = 0; c < myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
+
       moveOnColumnTest(c, iGame, false);					// FALSE = YOUR COLOR
       moveOnColumnTest(c, iGame, true);					// TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
 
@@ -307,6 +311,7 @@ public class MyAgent extends Agent {
         } else {
           goHereNotOk[c] = false; // it is OK to go here
          }
+
       }
     }
     return goHereNotOk;
