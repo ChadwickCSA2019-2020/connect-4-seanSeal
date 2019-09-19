@@ -84,7 +84,7 @@ public class MyAgentTest {
     }
 
 
-    /*//Tests if ICanWinAfterMyNextTurn works
+    //Tests if ICanWinAfterMyNextTurn works
 @Test
 public void testICanWinAfterMyNextTurn() {
 	  MyAgent redAgent = new MyAgent(game, true);
@@ -99,8 +99,9 @@ public void testICanWinAfterMyNextTurn() {
     redAgent.moveOnColumn(4);
     yellowAgent.moveOnColumn(3);
 
-    assertEquals(true , redAgent.iCanWinAfterMyNextTurn());
-}*/
+    boolean[] convert = redAgent.iCanWinAfterMyNextTurn();
+    assertEquals(true , convert[3]);
+}
 
 
     @Test
