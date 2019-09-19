@@ -181,20 +181,20 @@ public class MyAgent extends Agent {
       ran = randomMove();
       if (validColumnCount() == rejectCount) { // this if statement is a secondary gate
         if (!dumbCheck[ran]) {
-          System.out.println("DOES THIS PART WORK???????");
+         // System.out.println("DOES THIS PART WORK???????");
           moveOnColumn(ran);
           w = 0;
         }
 
       }
       if (!reject[ran]) {
-        System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
+       // System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
         if (!dumbCheck[ran] && !blockCheck[ran]) {
           moveOnColumn(ran);
           w = 0;
           // ask if we need a break
         } else {
-          System.out.println("DID THIS RUN");
+        //  System.out.println("DID THIS RUN");
           reject[ran] = true;
           rejectCount++;
         }
@@ -241,7 +241,6 @@ public class MyAgent extends Agent {
    * goHereNotOk when true means don't go there
    * @return boolean array of witch columns a agent should go on.
    */
-// something is wrong here
   public boolean[] iCanWinAfterMyNextTurn() { // checks if they win if you go here
     boolean[] goHereNotOk = new boolean[myGame.getColumnCount()];
     for (int c = 0; c < myGame.getColumnCount(); c++) {
