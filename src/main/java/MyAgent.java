@@ -174,27 +174,25 @@ public class MyAgent extends Agent {
     int ran = randomMove();
     int w = 1;
     int rejectCount = 0;
+    int rejectRejectCount = 0;
 
 
     while (w == 1) {
-
       ran = randomMove();
       if (validColumnCount() == rejectCount) { // this if statement is a secondary gate
-        if (!dumbCheck[ran]) {
-         // System.out.println("DOES THIS PART WORK???????");
+        if (!dumbCheck[ran] || rejectRejectCount == validColumnCount() ) {
           moveOnColumn(ran);
           w = 0;
+        } else {
+          rejectRejectCount++;
         }
 
       }
       if (!reject[ran]) {
-       // System.out.println("does this part work? " + dumbCheck[ran] + ":" + blockCheck[ran]);
         if (!dumbCheck[ran] && !blockCheck[ran]) {
           moveOnColumn(ran);
           w = 0;
-          // ask if we need a break
         } else {
-        //  System.out.println("DID THIS RUN");
           reject[ran] = true;
           rejectCount++;
         }
@@ -289,10 +287,7 @@ public class MyAgent extends Agent {
    * ==============
    * SHOULD ONLY BE USED AFTER iCanWin AND theyCanWin have returned -1(you can't win and they can't win)
    * this is dumbCheck
-<<<<<<< HEAD
-   * @return boolean array (this needs to be fished)
-=======
->>>>>>> 5bd6c41d70085e76e4b8ee04e73d5cac66ac8b13
+   * @return boolean array
    */
 
   public boolean[] theyCanWinAfterMyNextTurn() { // THEY WIN IF YOU GO HERE
@@ -304,9 +299,9 @@ public class MyAgent extends Agent {
       moveOnColumnTest(c, iGame, true); // TRUE = THE OPPOSITE COLOR OF WHAT YOU ARE
 
       if (iGame.gameWon() != 'N') {
-        if (iGame.gameWon() == 'R' && iAmRed) {
+        if (iGame.gameWon() == 'R' && !iAmRed) {
           goHereNotOk[c] = true; // don't go here
-        } else if (iGame.gameWon() == 'Y' && !iAmRed) {
+        } else if (iGame.gameWon() == 'Y' && iAmRed) {
           goHereNotOk[c] = true; // don't go here
         } else {
           goHereNotOk[c] = false; // it is OK to go here
