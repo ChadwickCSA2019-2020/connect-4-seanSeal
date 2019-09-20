@@ -211,7 +211,7 @@ public void testICanWinAfterMyNextTurn() {
       yellowAgent.moveOnColumn(4);
 
       boolean[] convert = redAgent.theyCanWinAfterMyNextTurn();
-      assertEquals(true , convert[2]);
+      assertEquals(true, convert[2]);
   }
     // Tests you can win against a Beginner agent as Red
     @Test
@@ -221,14 +221,12 @@ public void testICanWinAfterMyNextTurn() {
         int numberOfWins = 0;
         for (int i = 0; i < 50; i++) {
             game.clearBoard();
-            System.out.println("Running the game");
-            while(!game.boardFull() && game.gameWon() == 'N') {
+            while (!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
                 if (game.gameWon() != 'R') {
                     yellowAgent.move();
                 }
             }
-            System.out.println("At game " + i);
             if (game.gameWon() == 'R') {
                 numberOfWins++;
             }
@@ -245,8 +243,8 @@ public void testICanWinAfterMyNextTurn() {
         Agent yellowAgent = new MyAgent(game, false);
         int numberOfWins = 0;
         for (int i = 0; i < 50; i++) {
-            game.clearBoard(); 
-            while(!game.boardFull() && game.gameWon() == 'N') {
+            game.clearBoard();
+            while (!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
                 if (game.gameWon() != 'R') {
                     yellowAgent.move();
@@ -269,8 +267,8 @@ public void testICanWinAfterMyNextTurn() {
         Agent yellowAgent = new RandomAgent(game, false);
         int numberOfWins = 0;
         for (int i = 0; i < 50; i++) {
-            game.clearBoard(); 
-            while(!game.boardFull() && game.gameWon() == 'N') {
+            game.clearBoard();
+            while (!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
                 if (game.gameWon() != 'R') {
                     yellowAgent.move();
@@ -286,7 +284,7 @@ public void testICanWinAfterMyNextTurn() {
         assertTrue(numberOfWins >= 45);
     }
 
-    //Tests you can win against a Random agent as Red
+    // Tests you can win against a Random agent as Yellow
     @Test
     public void testYellowWinningRandomAgent() {
         Agent redAgent = new RandomAgent(game, true);
@@ -335,14 +333,13 @@ public void testICanWinAfterMyNextTurn() {
         assertTrue(numberOfWins >= 45);
     }
 
-    //Tests you can win against a Intermediate agent as Yellow
+    // Tests you can win against a Intermediate agent as Yellow
     @Test
     public void testYellowWinningIntermediateAgent() {
         Agent redAgent = new IntermediateAgent(game, true);
         Agent yellowAgent = new MyAgent(game, false);
         int numberOfWins = 0;
         for (int i = 0; i < 50; i++) {
-          System.out.println("On game " + i);
             game.clearBoard(); 
             while(!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
@@ -355,7 +352,7 @@ public void testICanWinAfterMyNextTurn() {
                 numberOfWins++;
             }
         }
-        System.out.println("You won: " + numberOfWins + " games as Yellow against IntermediateAgent");
+        System.out.println("You won: " + numberOfWins + " games as Yellow against Intermediate Agent");
         // Test that you win over 90% of your games
         assertTrue(numberOfWins >= 45);
     }
