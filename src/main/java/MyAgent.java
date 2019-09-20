@@ -180,7 +180,7 @@ public class MyAgent extends Agent {
     while (w == 1) {
       ran = randomMove();
       if (validColumnCount() == rejectCount) { // this if statement is a secondary gate
-        if (!dumbCheck[ran] || rejectRejectCount == validColumnCount() ) {
+        if (!dumbCheck[ran] || rejectRejectCount == validColumnCount()) {
           moveOnColumn(ran);
           w = 0;
         } else {

@@ -13,7 +13,7 @@ public class MyAgentTest {
         game = new Connect4Game(7, 6);
     }
 
-    @Test
+    @Test // tests for winning vertically on the first column
     public void testICanWinVerticallySimple() {
         MyAgent redAgent = new MyAgent(game, true);
         MyAgent yellowAgent = new MyAgent(game, false);
@@ -27,7 +27,7 @@ public class MyAgentTest {
 
     }
 
-    @Test
+    @Test // tests if can win vertically on any of the top columns
     public void testICanWinVerticallyTop4() {
         MyAgent redAgent = new MyAgent(game, true);
         MyAgent yellowAgent = new MyAgent(game, false);
@@ -60,6 +60,30 @@ public class MyAgentTest {
 
     }
 
+    @Test
+    public void testICanWinHorizontallyTopRow() {
+      MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+      for(int i = 0; i < 3; i++) {
+          redAgent.moveOnColumn(i);
+          yellowAgent.moveOnColumn(i);
+      }
+      for(int i = 0; i < 3; i++) {
+        redAgent.moveOnColumn(i);
+        yellowAgent.moveOnColumn(i);
+    }
+      for(int i = 0; i < 3; i++) {
+        redAgent.moveOnColumn(i);
+        yellowAgent.moveOnColumn(i);
+    }
+      for(int i = 0; i<3; i++) {
+        redAgent.moveOnColumn(i);
+        yellowAgent.moveOnColumn(i);
+      }
+      assertEquals(3 , redAgent.iCanWin());
+    }
+
 
 
 
@@ -81,6 +105,24 @@ public class MyAgentTest {
 
 
         assertEquals(4 , redAgent.iCanWin());
+    }
+    @Test
+    public void testICanWinDiagonallyOpposite() {
+        MyAgent redAgent = new MyAgent(game, true);
+        MyAgent yellowAgent = new MyAgent(game, false);
+        game.clearBoard();
+        redAgent.moveOnColumn(4);
+        yellowAgent.moveOnColumn(3);
+        redAgent.moveOnColumn(3);
+        yellowAgent.moveOnColumn(2);
+        redAgent.moveOnColumn(2);
+        yellowAgent.moveOnColumn(1);
+        redAgent.moveOnColumn(2);
+        yellowAgent.moveOnColumn(1);
+        redAgent.moveOnColumn(1);
+
+
+        assertEquals(1 , redAgent.iCanWin());
     }
 
 
