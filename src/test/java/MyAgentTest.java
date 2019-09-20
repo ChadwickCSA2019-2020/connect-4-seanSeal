@@ -388,7 +388,6 @@ public void testICanWinAfterMyNextTurn() {
         Agent yellowAgent = new MyAgent(game, false);
         int numberOfWins = 0;
         for (int i = 0; i < 50; i++) {
-          System.out.println("On game " + i);
             game.clearBoard(); 
             while(!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
@@ -438,7 +437,6 @@ public void testICanWinAfterMyNextTurn() {
         Agent yellowAgent = new MyAgent(game, false);
         int numberOfWins = 0;
         for (int i = 0; i < 50; i++) {
-          System.out.println("On game " + i);
             game.clearBoard(); 
             while(!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
