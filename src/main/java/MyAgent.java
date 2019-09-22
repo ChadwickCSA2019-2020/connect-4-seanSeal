@@ -53,8 +53,8 @@ public class MyAgent extends Agent {
   public void move() {
     if (iCanWin(myGame) > -1) {
       moveOnColumn(iCanWin(myGame));
-    } else if (theyCanWin() > -1) {
-      moveOnColumn(theyCanWin());
+    } else if (theyCanWin(myGame) > -1) {
+      moveOnColumn(theyCanWin(myGame));
     } else {
        checkRandomMove();
       // moveOnColumn(randomMove());

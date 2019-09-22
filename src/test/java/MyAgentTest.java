@@ -156,7 +156,7 @@ public void testICanWinAfterMyNextTurn() {
             yellowAgent.moveOnColumn(2);
         }
 
-        assertEquals(2, redAgent.theyCanWin());
+        assertEquals(2, redAgent.theyCanWin(game));
     }
 
     // TODO: Write testTheyCanWinHorizontally
@@ -171,7 +171,7 @@ public void testICanWinAfterMyNextTurn() {
             redAgent.moveOnColumn(i);
         }
 
-        assertEquals(3 , redAgent.theyCanWin());
+        assertEquals(3 , redAgent.theyCanWin(game));
 
     }
 
@@ -192,7 +192,7 @@ public void testICanWinAfterMyNextTurn() {
         redAgent.moveOnColumn(4);
         yellowAgent.moveOnColumn(4);
 
-        assertEquals(4 , redAgent.theyCanWin());
+        assertEquals(4 , redAgent.theyCanWin(game));
     }
 
     @Test
