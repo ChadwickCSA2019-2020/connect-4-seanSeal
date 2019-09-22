@@ -51,8 +51,8 @@ public class MyAgent extends Agent {
    *
    */
   public void move() {
-    if (iCanWin() > -1) {
-      moveOnColumn(iCanWin());
+    if (iCanWin(myGame) > -1) {
+      moveOnColumn(iCanWin(myGame));
     } else if (theyCanWin() > -1) {
       moveOnColumn(theyCanWin());
     } else {
@@ -211,15 +211,16 @@ public class MyAgent extends Agent {
    * it can go ahead and make that move. Implement this method to return what column would
    * allow the agent to win.</p>
    *
-   * @return the column that would allow the agent to win
+   * @param game the game it will run on
+   * @return the column that would allow the agent to win.
    */
-  public int iCanWin() {
+  public int iCanWin(Connect4Game game) {
     /**
      * Make copied of board.
      * Place your piece(theoretically) in column 1-ColumnCount if you can.
      */
     for (int c = 0; c < myGame.getColumnCount(); c++) {
-      Connect4Game iGame = new Connect4Game(myGame);
+      Connect4Game iGame = new Connect4Game(game);
       moveOnColumnTest(c, iGame, false);
       if (iGame.gameWon() != 'N') {
         return c;
@@ -311,6 +312,10 @@ public class MyAgent extends Agent {
     }
     return goHereNotOk;
   }
+  /**
+   *threat detector
+   */
+
 
   /**
    * Returns the name of this agent.
