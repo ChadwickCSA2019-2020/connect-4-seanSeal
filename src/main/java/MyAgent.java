@@ -268,12 +268,12 @@ public class MyAgent extends Agent {
    * <p>You might want your agent to check to see if the opponent would have any winning moves
    * available so your agent can block them. Implement this method to return what column should
    * be blocked to prevent the opponent from winning.</p>
-   *
+   * @param game the game it will run on.
    * @return the column that would allow the opponent to win.
    */
-  public int theyCanWin() {
-    for (int c = 0; c < myGame.getColumnCount(); c++) {
-      Connect4Game iGame = new Connect4Game(myGame);
+  public int theyCanWin(Connect4Game game) {
+    for (int c = 0; c < game.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(game);
       moveOnColumnTest(c, iGame, true);
       if (iGame.gameWon() != 'N') {
         return c;
