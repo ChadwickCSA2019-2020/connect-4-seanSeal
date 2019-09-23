@@ -51,13 +51,12 @@ public class MyAgent extends Agent {
    *
    */
   public void move() {
-    if (iCanWin() > -1) {
-      moveOnColumn(iCanWin());
-    } else if (theyCanWin() > -1) {
-      moveOnColumn(theyCanWin());
+    if (iCanWin(myGame) > -1) {
+      moveOnColumn(iCanWin(myGame));
+    } else if (theyCanWin(myGame) > -1) {
+      moveOnColumn(theyCanWin(myGame));
     } else {
        checkRandomMove();
-      // moveOnColumn(randomMove());
     }
   }
 
@@ -211,15 +210,16 @@ public class MyAgent extends Agent {
    * it can go ahead and make that move. Implement this method to return what column would
    * allow the agent to win.</p>
    *
-   * @return the column that would allow the agent to win
+   * @param game the game it will run on
+   * @return the column that would allow the agent to win.
    */
-  public int iCanWin() {
+  public int iCanWin(Connect4Game game) {
     /**
      * Make copied of board.
      * Place your piece(theoretically) in column 1-ColumnCount if you can.
      */
     for (int c = 0; c < myGame.getColumnCount(); c++) {
-      Connect4Game iGame = new Connect4Game(myGame);
+      Connect4Game iGame = new Connect4Game(game);
       moveOnColumnTest(c, iGame, false);
       if (iGame.gameWon() != 'N') {
         return c;
@@ -267,12 +267,12 @@ public class MyAgent extends Agent {
    * <p>You might want your agent to check to see if the opponent would have any winning moves
    * available so your agent can block them. Implement this method to return what column should
    * be blocked to prevent the opponent from winning.</p>
-   *
+   * @param game the game it will run on.
    * @return the column that would allow the opponent to win.
    */
-  public int theyCanWin() {
-    for (int c = 0; c < myGame.getColumnCount(); c++) {
-      Connect4Game iGame = new Connect4Game(myGame);
+  public int theyCanWin(Connect4Game game) {
+    for (int c = 0; c < game.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(game);
       moveOnColumnTest(c, iGame, true);
       if (iGame.gameWon() != 'N') {
         return c;
@@ -311,6 +311,21 @@ public class MyAgent extends Agent {
     }
     return goHereNotOk;
   }
+  /**
+   * double threat detector
+   * there are 2 ways to win unless you go here to block.
+   * @return returns column to move on to block.
+   */
+ public int dbThreatDetector() {
+    for (int c = 0; c > myGame.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(myGame);
+        moveOnColumnTest(c, iGame, true);
+        if (theyCanWin(iGame) > -1) {
+          
+        }
+      }
+  return -1;
+}
 
   /**
    * Returns the name of this agent.

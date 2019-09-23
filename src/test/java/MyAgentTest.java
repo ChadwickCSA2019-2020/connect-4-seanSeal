@@ -23,7 +23,7 @@ public class MyAgentTest {
             yellowAgent.moveOnColumn(2);
         }
 
-        assertEquals(1, redAgent.iCanWin());
+        assertEquals(1, redAgent.iCanWin(game));
 
     }
 
@@ -42,7 +42,7 @@ public class MyAgentTest {
             yellowAgent.moveOnColumn(1);
         }
 
-        assertEquals(2 , redAgent.iCanWin());
+        assertEquals(2 , redAgent.iCanWin(game));
 
     }
 
@@ -56,7 +56,7 @@ public class MyAgentTest {
             redAgent.moveOnColumn(i);
             yellowAgent.moveOnColumn(i);
         }
-        assertEquals(3 , redAgent.iCanWin());
+        assertEquals(3 , redAgent.iCanWin(game));
 
     }
 
@@ -81,7 +81,7 @@ public class MyAgentTest {
         redAgent.moveOnColumn(i);
         yellowAgent.moveOnColumn(i);
       }
-      assertEquals(3 , redAgent.iCanWin());
+      assertEquals(3 , redAgent.iCanWin(game));
     }
 
 
@@ -104,7 +104,7 @@ public class MyAgentTest {
         redAgent.moveOnColumn(4);
 
 
-        assertEquals(4 , redAgent.iCanWin());
+        assertEquals(4 , redAgent.iCanWin(game));
     }
     @Test
     public void testICanWinDiagonallyOpposite() {
@@ -122,7 +122,7 @@ public class MyAgentTest {
         redAgent.moveOnColumn(1);
 
 
-        assertEquals(1 , redAgent.iCanWin());
+        assertEquals(1 , redAgent.iCanWin(game));
     }
 
 
@@ -156,7 +156,7 @@ public void testICanWinAfterMyNextTurn() {
             yellowAgent.moveOnColumn(2);
         }
 
-        assertEquals(2, redAgent.theyCanWin());
+        assertEquals(2, redAgent.theyCanWin(game));
     }
 
     // TODO: Write testTheyCanWinHorizontally
@@ -171,7 +171,7 @@ public void testICanWinAfterMyNextTurn() {
             redAgent.moveOnColumn(i);
         }
 
-        assertEquals(3 , redAgent.theyCanWin());
+        assertEquals(3 , redAgent.theyCanWin(game));
 
     }
 
@@ -192,7 +192,7 @@ public void testICanWinAfterMyNextTurn() {
         redAgent.moveOnColumn(4);
         yellowAgent.moveOnColumn(4);
 
-        assertEquals(4 , redAgent.theyCanWin());
+        assertEquals(4 , redAgent.theyCanWin(game));
     }
 
     @Test
@@ -406,7 +406,7 @@ public void testICanWinAfterMyNextTurn() {
     }
 
     // SUPER BONUS TODO: Write testCases to playAgainst BrilliantAgent
- // Tests you can win against a Intermediate agent as Red
+ // Tests you can win against a Brilliant agent as Red
     @Test
     public void testRedWinningBrilliantAgent() {
         Agent redAgent = new MyAgent(game, true);
@@ -430,7 +430,7 @@ public void testICanWinAfterMyNextTurn() {
         assertTrue(numberOfWins >= 45);
     }
 
-    //Tests you can win against a Intermediate agent as Yellow
+    //Tests you can win against a Brilliant agent as Yellow
     @Test
     public void testYellowWinningBrilliantAgent() {
         Agent redAgent = new BrilliantAgent(game, true);
