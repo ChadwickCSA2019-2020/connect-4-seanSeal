@@ -57,7 +57,6 @@ public class MyAgent extends Agent {
       moveOnColumn(theyCanWin(myGame));
     } else {
        checkRandomMove();
-      // moveOnColumn(randomMove());
     }
   }
 
@@ -313,9 +312,20 @@ public class MyAgent extends Agent {
     return goHereNotOk;
   }
   /**
-   *threat detector
+   * double threat detector
+   * there are 2 ways to win unless you go here to block.
+   * @return returns column to move on to block.
    */
-
+ public int dbThreatDetector() {
+    for (int c = 0; c > myGame.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(myGame);
+        moveOnColumnTest(c, iGame, true);
+        if (theyCanWin(iGame) > -1) {
+          
+        }
+      }
+  return -1;
+}
 
   /**
    * Returns the name of this agent.
