@@ -280,6 +280,28 @@ public class MyAgent extends Agent {
     }
     return -1;
   }
+  
+  /**
+   * @return columns that they can win on
+   */
+  public boolean[] theyCanWinArray(Connect4Game game) {
+    boolean[] dbLocations = new boolean[game.getColumnCount()];
+    for (int c = 0; c < game.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(game);
+      moveOnColumnTest(c, iGame, true);
+      if (iGame.gameWon() != 'N') {
+        if (iGame.gameWon() == 'R' && !iAmRed) {
+          dbLocations[c] = true; // they can win
+        } else if (iGame.gameWon() == 'Y' && iAmRed) {
+          dbLocations[c] = true; // they can win
+        } else {
+          dbLocations[c] = false; // cannot win
+         }
+      }
+    }
+    return dbLocations;
+  }
+  
   /**
    * Can see the "consequence" of you move.
    * Does what theyCanWin but for the next turn.
@@ -320,7 +342,8 @@ public class MyAgent extends Agent {
     for (int c = 0; c > myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
         moveOnColumnTest(c, iGame, true);
-        if (theyCanWin(iGame) > -1) {
+        boolean[] dbColumns = theyCanWinArray(iGame);
+        if (dbColumns[c]) {
           
         }
       }
