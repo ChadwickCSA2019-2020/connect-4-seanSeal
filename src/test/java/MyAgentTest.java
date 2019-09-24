@@ -213,6 +213,26 @@ public void testICanWinAfterMyNextTurn() {
       boolean[] convert = redAgent.theyCanWinAfterMyNextTurn();
       assertEquals(true, convert[2]);
   }
+    
+    @Test
+    public void testDBThreatDetector() {
+      MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+      yellowAgent.moveOnColumn(0);
+      redAgent.moveOnColumn(1);
+      yellowAgent.moveOnColumn(1);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(2);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(4);
+      redAgent.moveOnColumn(2);
+      yellowAgent.moveOnColumn(2);
+      redAgent.moveOnColumn(4);
+      yellowAgent.moveOnColumn(4);
+      
+      assertEquals(1, redAgent.dbThreatDetector());
+    }
     // Tests you can win against a Beginner agent as Red
     @Test
     public void testRedWinningBeginnerAgent() {
