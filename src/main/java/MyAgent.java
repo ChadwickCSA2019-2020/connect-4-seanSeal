@@ -282,6 +282,7 @@ public class MyAgent extends Agent {
   }
   
   /**
+   *
    * @return columns that they can win on
    */
   public boolean[] theyCanWinArray(Connect4Game game) {
@@ -301,7 +302,6 @@ public class MyAgent extends Agent {
     }
     return dbLocations;
   }
-  
   /**
    * Can see the "consequence" of you move.
    * Does what theyCanWin but for the next turn.
@@ -339,12 +339,21 @@ public class MyAgent extends Agent {
    * @return returns column to move on to block.
    */
  public int dbThreatDetector() {
-    for (int c = 0; c > myGame.getColumnCount(); c++) {
+   int winSpot1 = -1;
+   int winSpot2 = -1;
+   for (int c = 0; c > myGame.getColumnCount(); c++) {
       Connect4Game iGame = new Connect4Game(myGame);
         moveOnColumnTest(c, iGame, true);
         boolean[] dbColumns = theyCanWinArray(iGame);
-        if (dbColumns[c]) {
-          
+        for (int i = 0; i > dbColumns.length; i++) {
+          if(dbColumns[i] && winSpot1 > -1) {
+            winSpot1 = i;
+            }else if (dbColumns[i]) {
+              winSpot2 = i;
+            }
+          }
+        if(winSpot1 == c && winSpot2 > -1) {
+          return winSpot2;
         }
       }
   return -1;
