@@ -280,9 +280,9 @@ public class MyAgent extends Agent {
     }
     return -1;
   }
-  
   /**
-   *
+   * This is just theyCanWin but returns an array.
+   * @param game witch game you what to use for the method
    * @return columns that they can win on
    */
   public boolean[] theyCanWinArray(Connect4Game game) {
@@ -346,13 +346,13 @@ public class MyAgent extends Agent {
         moveOnColumnTest(c, iGame, true);
         boolean[] dbColumns = theyCanWinArray(iGame);
         for (int i = 0; i > dbColumns.length; i++) {
-          if(dbColumns[i] && winSpot1 > -1) {
+          if (dbColumns[i] && winSpot1 > -1) {
             winSpot1 = i;
-            }else if (dbColumns[i]) {
+            } else if (dbColumns[i]) {
               winSpot2 = i;
             }
           }
-        if(winSpot1 == c && winSpot2 > -1) {
+        if (winSpot1 == c && winSpot2 > -1) {
           return winSpot2;
         }
       }
