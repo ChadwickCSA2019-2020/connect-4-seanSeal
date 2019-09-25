@@ -55,6 +55,8 @@ public class MyAgent extends Agent {
       moveOnColumn(iCanWin(myGame));
     } else if (theyCanWin(myGame) > -1) {
       moveOnColumn(theyCanWin(myGame));
+    } else if (dbThreatDetector() > -1) {
+      moveOnColumn(dbThreatDetector());
     } else {
        checkRandomMove();
     }
