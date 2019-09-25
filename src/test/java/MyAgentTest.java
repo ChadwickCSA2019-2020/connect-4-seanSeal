@@ -277,6 +277,10 @@ public void testTheyCanWinArray() {
     }
     
     @Test
+    public void test2DBThreatDetector() {
+      
+    }
+    @Test
     public void testOurDBThreatDetector() {
       MyAgent redAgent = new MyAgent(game, true);
       MyAgent yellowAgent = new MyAgent(game, false);

@@ -395,7 +395,10 @@ public class MyAgent extends Agent {
       }
   return columnReturn;
 }
-
+/**
+ * detects if we can make a double threat.
+ * @return returns column to move to set up double threat
+ */
  public int ourDBThreatDetector() {
    System.out.println("does db Detector start");
    int winSpot1 = -1;
