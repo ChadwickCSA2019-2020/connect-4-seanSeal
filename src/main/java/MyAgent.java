@@ -230,7 +230,28 @@ public class MyAgent extends Agent {
     return -1;
   }
 
-
+  /**
+   * This is just iCanWin but returns an array.
+   * @param game which game you what to use for the method
+   * @return columns that they can win on
+   */
+  public boolean[] iCanWinArray(Connect4Game game) {
+    boolean[] dbLocations = new boolean[game.getColumnCount()];
+    for (int c = 0; c < game.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(game);
+      moveOnColumnTest(c, iGame, false);
+      if (iGame.gameWon() != 'N') {
+        if (iGame.gameWon() == 'R' && iAmRed) {
+          dbLocations[c] = true; // I can win
+        } else if (iGame.gameWon() == 'Y' && !iAmRed) {
+          dbLocations[c] = true; // I can win
+        } else {
+          dbLocations[c] = false; // cannot win
+         }
+      }
+    }
+    return dbLocations;
+  }
   /**
    * Can see the "consequence" of you move.
    * Does what iCanWin but for the next turn.
@@ -375,6 +396,40 @@ public class MyAgent extends Agent {
   return columnReturn;
 }
 
+ public int ourDBThreatDetector() {
+   System.out.println("does db Detector start");
+   int winSpot1 = -1;
+   int winSpot2 = -1;
+   int columnReturn = -1;
+   System.out.println("does db Detector initalize stuff");
+   for (int c = 0; c < myGame.getColumnCount(); c++) {
+     // System.out.println("does the for loop work  " +  c);
+      Connect4Game iGame = new Connect4Game(myGame);
+        moveOnColumnTest(c, iGame, false);
+        boolean[] dbColumns = iCanWinArray(iGame);
+
+        for (int i = 0; i < dbColumns.length; i++) {
+          // System.out.println("does the second for loop work  " + i);
+          if (dbColumns[i] && winSpot1 == -1) {
+            System.out.println("does this work");
+            winSpot1 = i;
+            System.out.println("WinSpot1 " + winSpot1);
+            } else if (dbColumns[i] && winSpot2 == -1) {
+              winSpot2 = i;
+              System.out.println("WinSpot2 " + winSpot2);
+            }
+          }
+
+
+        if (winSpot1 > -1 && winSpot2 > -1) {
+          if (winSpot1 == c)
+            columnReturn = winSpot2;
+        } else if (winSpot2 == c) {
+          columnReturn = winSpot1;
+        }
+      }
+  return columnReturn;
+}
   /**
    * Returns the name of this agent.
    *
