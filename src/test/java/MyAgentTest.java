@@ -283,6 +283,31 @@ public void testTheyCanWinArray() {
       System.out.println("retun they Can Win :" + convert[3]);
       assertEquals(1, redAgent.dbThreatDetector());
     }
+    
+    @Test
+    public void testOurDBThreatDetector() {
+      MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+      yellowAgent.moveOnColumn(0);
+      redAgent.moveOnColumn(1);
+      yellowAgent.moveOnColumn(1);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(2);
+      redAgent.moveOnColumn(3);
+      yellowAgent.moveOnColumn(4);
+      redAgent.moveOnColumn(2);
+      yellowAgent.moveOnColumn(2);
+      redAgent.moveOnColumn(4);
+      yellowAgent.moveOnColumn(4);
+
+      
+      boolean[] convert = redAgent.iCanWinArray(game);
+      System.out.println("retun I Can Win :" + convert[1]);
+      System.out.println("retun I Can Win :" + convert[3]);
+      assertEquals(1, yellowAgent.ourDBThreatDetector());
+      
+    }
     // Tests you can win against a Beginner agent as Red
     @Test
     public void testRedWinningBeginnerAgent() {
