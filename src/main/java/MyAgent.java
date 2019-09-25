@@ -51,13 +51,14 @@ public class MyAgent extends Agent {
    *
    */
   public void move() {
-    if (iCanWin() > -1) {
-      moveOnColumn(iCanWin());
-    } else if (theyCanWin() > -1) {
-      moveOnColumn(theyCanWin());
+    if (iCanWin(myGame) > -1) {
+      moveOnColumn(iCanWin(myGame));
+    } else if (theyCanWin(myGame) > -1) {
+      moveOnColumn(theyCanWin(myGame));
+    } else if (dbThreatDetector() > -1) {
+      moveOnColumn(dbThreatDetector());
     } else {
        checkRandomMove();
-      // moveOnColumn(randomMove());
     }
   }
 
@@ -211,15 +212,16 @@ public class MyAgent extends Agent {
    * it can go ahead and make that move. Implement this method to return what column would
    * allow the agent to win.</p>
    *
-   * @return the column that would allow the agent to win
+   * @param game the game it will run on
+   * @return the column that would allow the agent to win.
    */
-  public int iCanWin() {
+  public int iCanWin(Connect4Game game) {
     /**
      * Make copied of board.
      * Place your piece(theoretically) in column 1-ColumnCount if you can.
      */
     for (int c = 0; c < myGame.getColumnCount(); c++) {
-      Connect4Game iGame = new Connect4Game(myGame);
+      Connect4Game iGame = new Connect4Game(game);
       moveOnColumnTest(c, iGame, false);
       if (iGame.gameWon() != 'N') {
         return c;
@@ -267,18 +269,40 @@ public class MyAgent extends Agent {
    * <p>You might want your agent to check to see if the opponent would have any winning moves
    * available so your agent can block them. Implement this method to return what column should
    * be blocked to prevent the opponent from winning.</p>
-   *
+   * @param game the game it will run on.
    * @return the column that would allow the opponent to win.
    */
-  public int theyCanWin() {
-    for (int c = 0; c < myGame.getColumnCount(); c++) {
-      Connect4Game iGame = new Connect4Game(myGame);
+  public int theyCanWin(Connect4Game game) {
+    for (int c = 0; c < game.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(game);
       moveOnColumnTest(c, iGame, true);
       if (iGame.gameWon() != 'N') {
         return c;
       }
     }
     return -1;
+  }
+  /**
+   * This is just theyCanWin but returns an array.
+   * @param game witch game you what to use for the method
+   * @return columns that they can win on
+   */
+  public boolean[] theyCanWinArray(Connect4Game game) {
+    boolean[] dbLocations = new boolean[game.getColumnCount()];
+    for (int c = 0; c < game.getColumnCount(); c++) {
+      Connect4Game iGame = new Connect4Game(game);
+      moveOnColumnTest(c, iGame, true);
+      if (iGame.gameWon() != 'N') {
+        if (iGame.gameWon() == 'R' && !iAmRed) {
+          dbLocations[c] = true; // they can win
+        } else if (iGame.gameWon() == 'Y' && iAmRed) {
+          dbLocations[c] = true; // they can win
+        } else {
+          dbLocations[c] = false; // cannot win
+         }
+      }
+    }
+    return dbLocations;
   }
   /**
    * Can see the "consequence" of you move.
@@ -311,6 +335,45 @@ public class MyAgent extends Agent {
     }
     return goHereNotOk;
   }
+  /**
+   * double threat detector
+   * there are 2 ways to win unless you go here to block.
+   * @return returns column to move on to block.
+   */
+ public int dbThreatDetector() {
+   System.out.println("does db Detector start");
+   int winSpot1 = -1;
+   int winSpot2 = -1;
+   int columnReturn = -1;
+   System.out.println("does db Detector initalize stuff");
+   for (int c = 0; c < myGame.getColumnCount(); c++) {
+     // System.out.println("does the for loop work  " +  c);
+      Connect4Game iGame = new Connect4Game(myGame);
+        moveOnColumnTest(c, iGame, true);
+        boolean[] dbColumns = theyCanWinArray(iGame);
+
+        for (int i = 0; i < dbColumns.length; i++) {
+          // System.out.println("does the second for loop work  " + i);
+          if (dbColumns[i] && winSpot1 == -1) {
+            System.out.println("does this work");
+            winSpot1 = i;
+            System.out.println("WinSpot1 " + winSpot1);
+            } else if (dbColumns[i] && winSpot2 == -1) {
+              winSpot2 = i;
+              System.out.println("WinSpot2 " + winSpot2);
+            }
+          }
+
+
+        if (winSpot1 > -1 && winSpot2 > -1) {
+          if (winSpot1 == c)
+            columnReturn = winSpot2;
+        } else if (winSpot2 == c) {
+          columnReturn = winSpot1;
+        }
+      }
+  return columnReturn;
+}
 
   /**
    * Returns the name of this agent.
