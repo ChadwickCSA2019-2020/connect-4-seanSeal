@@ -223,13 +223,10 @@ public void testTheyCanWinArray() {
   yellowAgent.moveOnColumn(3);
   redAgent.moveOnColumn(6);
   yellowAgent.moveOnColumn(4);
-  
-    System.out.println("TheyCanWinArray 1");
+
     boolean[] convert = redAgent.theyCanWinArray(game);
   assertEquals(true, convert[1]);
-  System.out.println("retun #1 :" + convert[1]);
   assertEquals(true, convert[5]);
-  System.out.println("retun #2 :" + convert[5]);
 }
 
     @Test
@@ -252,9 +249,6 @@ public void testTheyCanWinArray() {
       yellowAgent.moveOnColumn(3);
       boolean[] convert = redAgent.theyCanWinArray(game);
 
-      System.out.println("TheyCanWinArray 2");
-      System.out.println("retun #1 :" + convert[1]);
-      System.out.println("retun #2 :" + convert[3]);
 
       assertEquals(true, convert[1]);
       assertEquals(true, convert[3]);
@@ -279,8 +273,6 @@ public void testTheyCanWinArray() {
 
       
       boolean[] convert = redAgent.theyCanWinArray(game);
-      System.out.println("retun they Can Win :" + convert[1]);
-      System.out.println("retun they Can Win :" + convert[3]);
       assertEquals(1, redAgent.dbThreatDetector());
     }
     // Tests you can win against a Beginner agent as Red
