@@ -278,8 +278,17 @@ public void testTheyCanWinArray() {
     
     @Test
     public void test2DBThreatDetector() {
-      
+      MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+      for (int i = 2; i < 4; i++) {
+        yellowAgent.moveOnColumn(i);
+        redAgent.moveOnColumn(i);
+      }
+      System.out.println("Test2");
+      assertEquals(0, redAgent.dbThreatDetector());
     }
+
     @Test
     public void testOurDBThreatDetector() {
       MyAgent redAgent = new MyAgent(game, true);
@@ -297,14 +306,10 @@ public void testTheyCanWinArray() {
       redAgent.moveOnColumn(4);
       yellowAgent.moveOnColumn(4);
 
-      
-      boolean[] convert = redAgent.iCanWinArray(game);
-      System.out.println("retun I Can Win :" + convert[1]);
-      System.out.println("retun I Can Win :" + convert[3]);
       assertEquals(1, yellowAgent.ourDBThreatDetector());
-      
+
     }
-    
+
     // Tests you can win against a Beginner agent as Red
     @Test
     public void testRedWinningBeginnerAgent() {
