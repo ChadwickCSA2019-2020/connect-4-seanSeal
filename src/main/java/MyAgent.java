@@ -365,6 +365,7 @@ public class MyAgent extends Agent {
    int winSpot1 = -1;
    int winSpot2 = -1;
    int columnReturn = -1;
+   boolean didNotRun = false;
    for (int c = 0; c < myGame.getColumnCount(); c++) {
      // System.out.println("does the for loop work  " +  c);
       Connect4Game iGame = new Connect4Game(myGame);
@@ -386,9 +387,10 @@ public class MyAgent extends Agent {
             columnReturn = winSpot2;
           } else if (winSpot2 == c) {
             columnReturn = winSpot1;
+          } else {
+            didNotRun = true;
           }
-          System.out.println("WinSpot2 " + columnReturn);
-          if (columnReturn == -1) {
+          if (columnReturn == -1 && didNotRun) {
             columnReturn = c;
           }
         }
@@ -426,6 +428,7 @@ public class MyAgent extends Agent {
           columnReturn = winSpot1;
         }
       }
+   System.out.println(columnReturn);
   return columnReturn;
 }
   /**
