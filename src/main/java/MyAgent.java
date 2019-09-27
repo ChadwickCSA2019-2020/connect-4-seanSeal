@@ -204,8 +204,17 @@ public class MyAgent extends Agent {
 
     }
   }
-
-
+/**
+ * 
+ */
+  public int columnDumbCheck(int columnNumber) {
+    boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
+    int returnValue = -1;
+    if (!dumbCheck[columnNumber]) {
+      returnValue = columnNumber;
+    }
+    return returnValue;
+  }
 
   /**
    * Returns the column that would allow the agent to win.
