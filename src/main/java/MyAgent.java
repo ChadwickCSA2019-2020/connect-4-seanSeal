@@ -205,7 +205,8 @@ public class MyAgent extends Agent {
     }
   }
 /**
- * 
+ * @param columnNumber the column you want to check
+ * @return returnValue either column that you can go in or -1
  */
   public int columnDumbCheck(int columnNumber) {
     boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
