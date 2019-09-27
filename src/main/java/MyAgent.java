@@ -55,9 +55,9 @@ public class MyAgent extends Agent {
         moveOnColumn(iCanWin(myGame));
     } else if (theyCanWin(myGame) > -1) {
         moveOnColumn(theyCanWin(myGame));
-    } else if (dbThreatDetector() > -1) {
+    } else if (columnDumbCheck(dbThreatDetector()) > -1) {
       moveOnColumn(dbThreatDetector());
-    } else if (ourDBThreatDetector() > -1) {
+    } else if (columnDumbCheck(ourDBThreatDetector()) > -1) {
        moveOnColumn(ourDBThreatDetector());
     } else {
       checkRandomMove();
@@ -205,13 +205,16 @@ public class MyAgent extends Agent {
     }
   }
 /**
- * 
+ * @param columnNumber the column you want to check
+ * @return returnValue either column that you can go in or -1
  */
   public int columnDumbCheck(int columnNumber) {
     boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
     int returnValue = -1;
+    if(columnNumber != -1) {
     if (!dumbCheck[columnNumber]) {
       returnValue = columnNumber;
+    }
     }
     return returnValue;
   }
