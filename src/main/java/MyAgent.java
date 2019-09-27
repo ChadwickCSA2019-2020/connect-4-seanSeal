@@ -56,9 +56,9 @@ public class MyAgent extends Agent {
     } else if (theyCanWin(myGame) > -1) {
         moveOnColumn(theyCanWin(myGame));
     } else if (dbThreatDetector() > -1) {
-       moveOnColumn(dbThreatDetector());
+      moveOnColumn(dbThreatDetector());
     } else if (ourDBThreatDetector() > -1) {
-        moveOnColumn(ourDBThreatDetector());
+       moveOnColumn(ourDBThreatDetector());
     } else {
       checkRandomMove();
     }
@@ -204,8 +204,17 @@ public class MyAgent extends Agent {
 
     }
   }
-
-
+/**
+ * 
+ */
+  public int columnDumbCheck(int columnNumber) {
+    boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
+    int returnValue = -1;
+    if (!dumbCheck[columnNumber]) {
+      returnValue = columnNumber;
+    }
+    return returnValue;
+  }
 
   /**
    * Returns the column that would allow the agent to win.
