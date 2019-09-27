@@ -52,13 +52,15 @@ public class MyAgent extends Agent {
    */
   public void move() {
     if (iCanWin(myGame) > -1) {
-      moveOnColumn(iCanWin(myGame));
+        moveOnColumn(iCanWin(myGame));
     } else if (theyCanWin(myGame) > -1) {
-      moveOnColumn(theyCanWin(myGame));
+        moveOnColumn(theyCanWin(myGame));
     } else if (dbThreatDetector() > -1) {
-      moveOnColumn(dbThreatDetector());
+       moveOnColumn(dbThreatDetector());
+    } else if (ourDBThreatDetector() > -1) {
+        moveOnColumn(ourDBThreatDetector());
     } else {
-       checkRandomMove();
+      checkRandomMove();
     }
   }
 
@@ -362,11 +364,10 @@ public class MyAgent extends Agent {
    * @return returns column to move on to block.
    */
  public int dbThreatDetector() {
-   System.out.println("does db Detector start");
    int winSpot1 = -1;
    int winSpot2 = -1;
    int columnReturn = -1;
-   System.out.println("does db Detector initalize stuff");
+   boolean didNotRun = false;
    for (int c = 0; c < myGame.getColumnCount(); c++) {
      // System.out.println("does the for loop work  " +  c);
       Connect4Game iGame = new Connect4Game(myGame);
@@ -376,21 +377,24 @@ public class MyAgent extends Agent {
         for (int i = 0; i < dbColumns.length; i++) {
           // System.out.println("does the second for loop work  " + i);
           if (dbColumns[i] && winSpot1 == -1) {
-            System.out.println("does this work");
             winSpot1 = i;
-            System.out.println("WinSpot1 " + winSpot1);
             } else if (dbColumns[i] && winSpot2 == -1) {
               winSpot2 = i;
-              System.out.println("WinSpot2 " + winSpot2);
             }
           }
 
 
         if (winSpot1 > -1 && winSpot2 > -1) {
-          if (winSpot1 == c)
+          if (winSpot1 == c) {
             columnReturn = winSpot2;
-        } else if (winSpot2 == c) {
-          columnReturn = winSpot1;
+          } else if (winSpot2 == c) {
+            columnReturn = winSpot1;
+          } else {
+            didNotRun = true;
+          }
+          if (columnReturn == -1 && didNotRun) {
+            columnReturn = c;
+          }
         }
       }
   return columnReturn;
@@ -400,38 +404,30 @@ public class MyAgent extends Agent {
  * @return returns column to move to set up double threat
  */
  public int ourDBThreatDetector() {
-   System.out.println("does db Detector start");
    int winSpot1 = -1;
    int winSpot2 = -1;
    int columnReturn = -1;
-   System.out.println("does db Detector initalize stuff");
+   boolean stop = false;
    for (int c = 0; c < myGame.getColumnCount(); c++) {
-     // System.out.println("does the for loop work  " +  c);
       Connect4Game iGame = new Connect4Game(myGame);
         moveOnColumnTest(c, iGame, false);
         boolean[] dbColumns = iCanWinArray(iGame);
 
         for (int i = 0; i < dbColumns.length; i++) {
-          // System.out.println("does the second for loop work  " + i);
           if (dbColumns[i] && winSpot1 == -1) {
-            System.out.println("does this work");
             winSpot1 = i;
-            System.out.println("WinSpot1 " + winSpot1);
             } else if (dbColumns[i] && winSpot2 == -1) {
               winSpot2 = i;
-              System.out.println("WinSpot2 " + winSpot2);
             }
           }
-
-
-        if (winSpot1 > -1 && winSpot2 > -1) {
-          if (winSpot1 == c)
-            columnReturn = winSpot2;
-        } else if (winSpot2 == c) {
-          columnReturn = winSpot1;
-        }
-      }
-  return columnReturn;
+          if (winSpot1 > -1 && winSpot2 > -1) {
+            if (!stop) {
+              stop = true;
+              columnReturn = c;
+            }
+          }
+       }
+   return columnReturn;
 }
   /**
    * Returns the name of this agent.
