@@ -56,9 +56,9 @@ public class MyAgent extends Agent {
     } else if (theyCanWin(myGame) > -1) {
         moveOnColumn(theyCanWin(myGame));
     } else if (dbThreatDetector() > -1) {
-       moveOnColumn(dbThreatDetector());
+      moveOnColumn(dbThreatDetector());
     } else if (ourDBThreatDetector() > -1) {
-        moveOnColumn(ourDBThreatDetector());
+       moveOnColumn(ourDBThreatDetector());
     } else {
       checkRandomMove();
     }
