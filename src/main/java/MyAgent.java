@@ -205,13 +205,14 @@ public class MyAgent extends Agent {
     }
   }
 /**
+ * Checks if columns is not really really dumb.
  * @param columnNumber the column you want to check
  * @return returnValue either column that you can go in or -1
  */
   public int columnDumbCheck(int columnNumber) {
     boolean[] dumbCheck = theyCanWinAfterMyNextTurn();
     int returnValue = -1;
-    if(columnNumber != -1) {
+    if (columnNumber != -1) {
     if (!dumbCheck[columnNumber]) {
       returnValue = columnNumber;
     }
@@ -381,13 +382,11 @@ public class MyAgent extends Agent {
    int columnReturn = -1;
    boolean didNotRun = false;
    for (int c = 0; c < myGame.getColumnCount(); c++) {
-     // System.out.println("does the for loop work  " +  c);
       Connect4Game iGame = new Connect4Game(myGame);
         moveOnColumnTest(c, iGame, true);
         boolean[] dbColumns = theyCanWinArray(iGame);
 
         for (int i = 0; i < dbColumns.length; i++) {
-          // System.out.println("does the second for loop work  " + i);
           if (dbColumns[i] && winSpot1 == -1) {
             winSpot1 = i;
             } else if (dbColumns[i] && winSpot2 == -1) {
@@ -441,6 +440,18 @@ public class MyAgent extends Agent {
        }
    return columnReturn;
 }
+ 
+ public int twoToThree() {
+   int columnReturn = -1;
+  for(int c = 0; c < myGame.getColumnCount(); c++) {
+    Connect4Game iGame = new Connect4Game(myGame);
+    moveOnColumnTest(c, iGame, false);
+    if(iCanWin(iGame) > -1) {
+      columnReturn = c;
+    }
+  }
+  return columnReturn;
+ }
   /**
    * Returns the name of this agent.
    *
