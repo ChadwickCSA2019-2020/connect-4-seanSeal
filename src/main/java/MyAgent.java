@@ -440,13 +440,16 @@ public class MyAgent extends Agent {
        }
    return columnReturn;
 }
- 
+/**
+ * Attempts to make 3 in a row but only if it is possible to win with that 3 in a row.
+ * @return returns column to make into 3 in a row
+ */
  public int twoToThree() {
    int columnReturn = -1;
-  for(int c = 0; c < myGame.getColumnCount(); c++) {
+  for (int c = 0; c < myGame.getColumnCount(); c++) {
     Connect4Game iGame = new Connect4Game(myGame);
     moveOnColumnTest(c, iGame, false);
-    if(iCanWin(iGame) > -1) {
+    if (iCanWin(iGame) > -1) {
       columnReturn = c;
     }
   }
