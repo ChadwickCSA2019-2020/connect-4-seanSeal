@@ -319,7 +319,13 @@ public void testTheyCanWinArray() {
       }
       assertEquals(1, yellowAgent.ourDBThreatDetector());
     }
-    
+
+    @Test
+    public void testTwoToThree() {
+      MyAgent redAgent = new MyAgent(game, true);
+      MyAgent yellowAgent = new MyAgent(game, false);
+      game.clearBoard();
+    }
     // Tests you can win against a Beginner agent as Red
     @Test
     public void testRedWinningBeginnerAgent() {
@@ -519,8 +525,8 @@ public void testTheyCanWinArray() {
         Agent redAgent = new MyAgent(game, true);
         Agent yellowAgent = new BrilliantAgent(game, false);
         int numberOfWins = 0;
-        for (int i = 0; i < 10000; i++) {
-            game.clearBoard(); 
+        for (int i = 0; i < 50; i++) {
+            game.clearBoard();
             while(!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
                 if (game.gameWon() != 'R') {
@@ -534,17 +540,17 @@ public void testTheyCanWinArray() {
         }
         System.out.println("You won: " + numberOfWins + " games as Red against BrilliantAgent");
         // Test that you win over 90% of your games
-        assertTrue(numberOfWins >= 9000);
+        assertTrue(numberOfWins >= 45);
     }
 
-    //Tests you can win against a Brilliant agent as Yellow
+    // Tests you can win against a Brilliant agent as Yellow
     @Test
     public void testYellowWinningBrilliantAgent() {
         Agent redAgent = new BrilliantAgent(game, true);
         Agent yellowAgent = new MyAgent(game, false);
         int numberOfWins = 0;
-        for (int i = 0; i < 10000; i++) {
-            game.clearBoard(); 
+        for (int i = 0; i < 50; i++) {
+            game.clearBoard();
             while (!game.boardFull() && game.gameWon() == 'N') {
                 redAgent.move();
                 if (game.gameWon() != 'R') {
@@ -558,6 +564,6 @@ public void testTheyCanWinArray() {
         }
         System.out.println("You won: " + numberOfWins + " games as Yellow against BrilliantAgent");
         // Test that you win over 90% of your games
-        assertTrue(numberOfWins >= 9000);
+        assertTrue(numberOfWins >= 45);
     }
 }

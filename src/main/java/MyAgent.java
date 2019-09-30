@@ -442,6 +442,7 @@ public class MyAgent extends Agent {
 }
 /**
  * Attempts to make 3 in a row but only if it is possible to win with that 3 in a row.
+ * when implemented it seemed to decreases our win rate.
  * @return returns column to make into 3 in a row
  */
  public int twoToThree() {
