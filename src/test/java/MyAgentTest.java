@@ -320,12 +320,12 @@ public void testTheyCanWinArray() {
       assertEquals(1, yellowAgent.ourDBThreatDetector());
     }
 
-    @Test
-    public void testTwoToThree() {
-      MyAgent redAgent = new MyAgent(game, true);
-      MyAgent yellowAgent = new MyAgent(game, false);
-      game.clearBoard();
-    }
+ //   @Test
+ //   public void testTwoToThree() {
+ //     MyAgent redAgent = new MyAgent(game, true);
+ //     MyAgent yellowAgent = new MyAgent(game, false);
+ //     game.clearBoard();
+ //   }
     // Tests you can win against a Beginner agent as Red
     @Test
     public void testRedWinningBeginnerAgent() {
